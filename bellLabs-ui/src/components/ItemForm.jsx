@@ -5,8 +5,8 @@ function ItemForm({ onAddItem }) {
   const [expirationDate, setExpirationDate] = useState('');
   const [quantity, setQuantity] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
     onAddItem({ name, expirationDate, quantity });
     setName('');
     setExpirationDate('');
