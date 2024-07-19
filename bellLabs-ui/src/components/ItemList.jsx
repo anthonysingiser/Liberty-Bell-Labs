@@ -26,7 +26,7 @@ function ItemList({ items, onRemoveItems }) {
               checked={selectedItems.includes(index)}
               onChange={() => handleSelectItem(index)}
             />
-            {item.name} - Expires on {item.expirationDate} - Quantity: {item.quantity}
+            {item.name} // Expires on {item.expirationDate} // Quantity: {item.quantity}
           </li>
         ))}
       </ul>

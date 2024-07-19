@@ -19,19 +19,19 @@ function ItemForm({ onAddItem }) {
         type="text"
         placeholder="Name"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(event) => setName(event.target.value)}
       />
       <input
         type="date"
         placeholder="Expiration Date"
         value={expirationDate}
-        onChange={(e) => setExpirationDate(e.target.value)}
+        onChange={(event) => setExpirationDate(event.target.value)}
       />
       <input
         type="number"
         placeholder="Quantity"
         value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
+        onChange={(event) => setQuantity(event.target.value)}
       />
       <button type="submit">Add Item</button>
     </form>

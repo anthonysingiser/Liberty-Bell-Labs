@@ -1,0 +1,12 @@
+.app-container { 
+    display: flex;
+    align-items: flex-start;
+}
+
+.ItemList {
+    flex-grow: 1;
+}
+
+.ItemForm { 
+    margin-left: 20px;
+}
