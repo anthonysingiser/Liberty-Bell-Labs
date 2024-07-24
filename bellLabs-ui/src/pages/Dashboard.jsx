@@ -1,19 +1,39 @@
-import React, { useState } from 'react';
-import ItemForm from '@/ItemForm.jsx';
-import ItemList from '@/ItemList.jsx';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import ItemForm from '../components/ItemForm';
+import ItemList from '../components/ItemList';
 
 function Dashboard() {
   const [items, setItems] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios.get('/api/items')
+      .then(response => setItems(response.data))
+      .catch(error => {
+        console.error('Error fetching items:', error);
+        setError('Error fetching items');
+      });
+  }, []);
 
   const handleAddItem = (item) => {
-    setItems((prevItems) => [...prevItems, item]);
+    axios.post('/api/items', item)
+      .then(response => setItems([...items, response.data]))
+      .catch(error => {
+        console.error('Error adding item:', error);
+        setError('Error adding item');
+      });
   };
 
   const handleRemoveItems = (selectedIndices) => {
-    setItems((prevItems) =>
-      prevItems.filter((_, index) => !selectedIndices.includes(index))
-    );
+    const idsToDelete = selectedIndices.map(index => items[index].id);
+    axios.delete('/api/items', { data: idsToDelete })
+      .then(() => setItems(items.filter((_, index) => !selectedIndices.includes(index))))
+      .catch(error => {
+        console.error('Error deleting items:', error);
+        setError('Error deleting items');
+      });
   };
 
   const toggleFormVisibility = () => {
@@ -22,6 +42,7 @@ function Dashboard() {
 
   return (
     <div className="app-container">
+      {error && <div className="error">{error}</div>}
       <ItemList items={items} onRemoveItems={handleRemoveItems} />
       <button onClick={toggleFormVisibility}>Toggle Add Item</button>
       {isFormVisible && <ItemForm onAddItem={handleAddItem} />}
@@ -30,13 +51,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
-/* 
-categories: 
-    -fruits/vegetables
-    -meat/fish/seafood
-    -dairy/alternatives
-    -grains
-    -frozen
-    -canned
-*/
